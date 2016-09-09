@@ -1,0 +1,24 @@
+{
+  "name": "node_server",
+  "version": "1.0.0",
+  "description": "The back-end for the Ember.js based iForgot front-end.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.5.2",
+    "body-parser": "^1.15.2",
+    "cas": "0.0.3",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^1.2.0",
+    "express": "^4.14.0",
+    "express-session": "^1.13.0",
+    "jquery": "^3.0.0",
+    "node-uuid": "^1.4.7",
+    "request": "^2.72.0",
+    "serve-static": "^1.11.1"
+  }
+}

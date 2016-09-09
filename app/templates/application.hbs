@@ -1,0 +1,63 @@
+<div class="nav-bar ease" style={{navbarColorStyle}}>
+	<a href={{districtWebsite}} target="_blank">
+		<div class="psd-logo" style={{logoStyle}}></div>
+	</a>
+
+	<div class="title">
+		<span>{{title}}</span>
+	</div>
+</div>
+
+{{#if passwordChanged}}
+
+	<div class="small-modal" style={{modalStyle}}>
+		<div class="modal-title" style={{modalTitleStyle}}>
+			<span>Password Changed</span>
+		</div>
+
+		<div class="modal-body">
+			<div class="done-text margin-auto">
+				<span>
+					{{finalText}}
+				</span>
+			</div>
+			
+			<a href={{districtWebsite}}><div class="psd-logo margin-auto ease" style={{logoStyle}}></div></a>
+		</div>
+	</div>
+
+{{else}}
+	{{#if routeIsHome}}
+		{{ sign-in
+
+			class=signInClass
+			showLoginFields="showLoginFields"	
+			showLDAPModal="showLDAPModal"
+			style=modalStyle
+			modalTitleStyle=modalTitleStyle
+
+		}}
+
+		{{ change-password
+
+			class=changePasswordClass
+			done="done"
+			cancel="cancel"
+			style=modalStyle
+			modalTitleStyle=modalTitleStyle
+
+		}}
+	{{/if}}
+{{/if}}
+
+{{ ldap-modal
+
+	class=ldapModalClass	
+	modalStyle=modalStyle
+	modalTitleStyle=modalTitleStyle
+
+}}
+
+<div class={{overlayClass}} {{action "hideOverlay"}}></div>
+
+{{outlet}}

@@ -1,0 +1,108 @@
+{{outlet}}
+
+<div class={{usernameClass}} style={{modalStyle}}>
+	<div class="modal-title" style={{modalTitleStyle}}>
+		<span>Forgot Password</span>
+	</div>
+
+	<div class="modal-body">
+		<div class="username label">Enter your username...</div>
+		{{ input type="text" class="username" placeholder="ex. 'John Smith' = 'smithj'" value=username key-up="updateUsername" }}
+	</div>
+
+	<div class="modal-footer">
+		<div class="modal-footer-buttons">
+			<div class="modal-footer-button one ease" {{action "getUserInformation"}}>
+				<span>Continue</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{{#each questions as |question|}}
+
+	{{ question-set 
+
+		class=question.class
+		question=question
+
+		sendAnswer="sendAnswer"
+		goBackToQuestion="goBackToQuestion"
+		style=modalStyle
+		modalTitleStyle=modalTitleStyle
+
+	}}
+
+{{/each}}
+
+<div class={{verifyAnswersClass}} style={{modalStyle}}>
+
+	<div class="modal-title" style={{modalTitleStyle}}>
+		<span>Verify Answers</span>
+	</div>
+
+	<div class="modal-body scroll">
+		<span>Please take a moment to verify your answers before continuing.</span>
+
+		<br/>
+
+		{{#each questions as |question|}}
+
+			<ul class="verify-answers">
+
+				<div class="question ease" {{ action "goBackToQuestion" question.i true }}>
+					<li class="question-title ease">{{question.title}}</li>
+				</div>
+
+				{{#each question.answers as |answer|}}
+					<li class="answer">{{answer.title}}</li>
+				{{/each}}
+
+				<li class="user-answer">You selected: {{question.answer.title}}</li>
+
+			</ul>
+
+		{{/each}}
+	</div>
+
+	<div class="modal-footer">
+		<div class="modal-footer-buttons">
+			<div class="modal-footer-button two ease" {{action "goBackToQuestion" 2 true}}>
+				<span>Back</span>
+			</div>
+			<div class="modal-footer-button two last ease" {{action "submitAnswers"}}>
+				<span>Continue</span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class={{badAnswersClass}} style={{modalStyle}}>
+	<div class="modal-title" style={{modalTitleStyle}}>
+		<span>Incorrect Answers</span>
+	</div>
+
+	<div class="modal-body">
+		<span class="incorrect-answers red">You have given incorrect answers to these security questions. Please click the "restart" button below and try again.</span>
+	</div>
+
+	<div class="modal-footer">
+		<div class="modal-footer-buttons">
+			<div class="modal-footer-button one red ease" {{action "restart"}}>
+				<span>Restart</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+{{ change-password
+
+	class=changePasswordClass
+	done="done"
+	cancel="cancelPasswordChange"
+	style=modalStyle
+	modalTitleStyle=modalTitleStyle
+
+}}

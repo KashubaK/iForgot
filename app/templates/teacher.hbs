@@ -1,0 +1,240 @@
+{{outlet}}
+<div class={{specifyStudentsClass}} style={{modalStyle}}>
+	<div class="modal-title" style={{modalTitleStyle}}>
+		<span>Specify Student(s)</span>
+	</div>
+
+	<div class="modal-body">
+		{{#if kindergarten}}
+			<span class="push-top push-bottom">Select students you'd like to change:</span>
+
+			<a class="push-bottom" {{action "selectAll"}}>Select All</a>
+		{{else}}
+			<span class="push-top push-bottom">Select class(es)</span>
+			<div class="buttons push-bottom">
+
+				{{#each classes as |class|}}
+
+					<div class={{class.cssClass}} {{action "selectClass" class}}>
+						<span>{{class.expression}}</span>
+					</div>
+
+				{{/each}}
+
+			</div>
+
+			<br/>
+		{{/if}}
+
+		{{input class="student-search vertical-center-margin" type="text" value=studentSearch key-up="updateStudentSearch" placeholder="Search: ex. 'John Smith', '2009432', ..." }}
+
+		<span class="push-bottom">Selected {{amountOfSelectedStudents}} of {{amountOfStudents}}</span>
+
+		<div class="students">
+
+			{{#each students as |stu|}}
+				<div class={{stu.cssClass}} {{action "selectStudent" stu}}>
+
+					<span class="name">{{stu.info.firstName}} {{stu.info.lastName}}</span>
+					<span class="number">{{stu.id}}</span>
+
+				</div>
+			{{/each}}
+
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<div class="modal-footer-buttons">
+			<div class="modal-footer-button two first red ease" {{action "cancel"}}>
+				<span>Cancel</span>
+			</div>
+			<div class="modal-footer-button two last ease" {{action "toPasswordSchemeStep"}}>
+				<span>Next</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class={{passwordSchemeClass}} style={{modalStyle}}>
+	<div class="modal-title" style={{modalTitleStyle}}>
+		<span>Specify a Password</span>
+	</div>
+
+	<div class="modal-body">
+
+		<span class="push-top push-bottom">Customize a new scheme, or <a {{action "districtStandard"}}>use the district standard</a>.</span>
+
+		<span class="push-bottom">Any scheme can be used.</span>
+
+		<div class="scheme">
+			<select class="options first" onchange={{action "firstFirstHalf"}}>
+				<option>First Name</option>
+				<option>Middle Name</option>
+				<option selected>Last Name</option>
+				<option>Birth Day</option>
+				<option>Birth Month</option>
+				<option>Birth Year</option>
+				<option>Phone Number</option>
+				<option>Address</option>
+			</select>
+			<select class="options second" onchange={{action "secondFirstHalf"}}>
+				<option>...</option>
+				<option>First Name</option>
+				<option>Middle Name</option>
+				<option>Last Name</option>
+				<option>Birth Day</option>
+				<option>Birth Month</option>
+				<option>Birth Year</option>
+				<option>Phone Number</option>
+				<option>Address</option>
+			</select>
+			<select class="options third" onchange={{action "firstSecondHalf"}}>
+				<option>First Name</option>
+				<option>Middle Name</option>
+				<option>Last Name</option>
+				<option>Birth Day</option>
+				<option selected>Birth Month</option>
+				<option>Birth Year</option>
+				<option>Phone Number</option>
+				<option>Address</option>
+			</select>
+			<select class="options fourth" onchange={{action "secondSecondHalf"}}>
+				<option>...</option>
+				<option>First Name</option>
+				<option>Middle Name</option>
+				<option>Last Name</option>
+				<option selected>Birth Day</option>
+				<option>Birth Month</option>
+				<option>Birth Year</option>
+				<option>Phone Number</option>
+				<option>Address</option>
+			</select>
+		</div>
+
+		<div class="scheme last">
+			<select class="extra-options first" onchange={{action "firstFirstHalfOptions"}}>
+				<option>aa</option>
+				<option>Aa</option>
+				<option>aA</option>
+				<option>AA</option>
+			</select>
+			<select class="extra-options second" onchange={{action "secondFirstHalfOptions"}}>
+				<option>aa</option>
+				<option>Aa</option>
+				<option>aA</option>
+				<option>AA</option>
+			</select>
+			<select class="extra-options third" onchange={{action "firstSecondHalfOptions"}}>
+				<option>aa</option>
+				<option>Aa</option>
+				<option>aA</option>
+				<option>AA</option>
+			</select>
+			<select class="extra-options fourth" onchange={{action "secondSecondHalfOptions"}}>
+				<option>aa</option>
+				<option>Aa</option>
+				<option>aA</option>
+				<option>AA</option>
+			</select>
+		</div>
+
+		<span>Preview your scheme:</span>
+
+		<div class="example-user">
+			<span><b>Name:</b> John Doe  Smith</span>
+			<br/>
+			<span><b>Born:</b> January 1st, 2000</span>
+			<br/>
+			<span><b>Phone:</b> (555) 555-1234</span>
+			<br/>
+			<span><b>Address:</b> 54321 John St Example, WA 98765</span>
+		</div>
+
+		<div class="password-preview push-top push-bottom vertical-center-margin">
+			<span>{{passwordPreview}}</span>
+		</div>
+
+		<hr/>
+
+		<span class="push-top push-bottom">Alternatively, you can write a new password:</span>
+
+		{{#if dontMatch}}
+			<span class="red">Your passwords must match.</span>
+		{{/if}}
+
+		{{input class="student-search" type="password" value=newPassword key-up="updateNewPassword" placeholder="Type a new password here..." }}
+
+		{{input class="student-search left-space-fix" type="password" value=verifyPassword key-up="updateVerifyPassword" placeholder="Verify the new password...." }}
+
+		<br/>
+
+		{{#if canContinue}}
+			<span class="green">You're good to go, click "continue" for the next steps.</span>
+		{{/if}}
+
+		<span class="push-top push-bottom">
+			If you're using a custom scheme, leave both password fields blank.
+		</span>
+	</div>
+
+	<div class="modal-footer">
+		<div class="modal-footer-buttons">
+			<div class="modal-footer-button two first ease" {{action "toSpecifyUsersStep"}}>
+				<span>Back</span>
+			</div>
+			<div class="modal-footer-button two last ease" {{action "toVerifyRequestStep"}}>
+				<span>Continue</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class={{verifyRequestClass}} style={{modalStyle}}>
+	<div class="modal-title" style={{modalTitleStyle}}>
+		<span>Verify Request</span>
+	</div>
+
+	<div class="modal-body">
+		<span><b>When you click submit below, your changes <i>will</i> be applied.</b></span>
+		<hr/>
+
+		<span class="push-top push-bottom"><b>These users will be affected:</b></span>
+
+		<div class="students confirm-students">
+			{{#each selectedStudents as |stud|}}
+				<div class="student {{stud.status}}">
+					<span class="name">{{stud.info.firstName}} {{stud.info.lastName}}</span>
+					<span class="number">{{stud.id}}</span>
+				</div>
+			{{/each}}
+		</div>
+
+		{{#if loadingPercentage}}
+			{{#if doneLoading}}
+				<span class="push-top"><b>Done!</b></span>
+			{{else}}
+				<div class="loader push-top"></div>
+				<span>Changed <b>{{loadingPercentage}}%</b> of students' password.</span>
+			{{/if}}
+		{{/if}}
+	</div>
+
+	<div class="modal-footer">
+		<div class="modal-footer-buttons">
+			<div class="modal-footer-button two first ease" {{action "goBackToPasswordStep"}}>
+				<span>Back</span>
+			</div>
+			<div class="modal-footer-button two last ease" {{action "submitPassword"}}>
+				<span>Submit</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class={{activityClass}}>
+	<div class={{loaderClass}}>
+
+	</div>
+	<span>{{activityText}}</span>
+</div>

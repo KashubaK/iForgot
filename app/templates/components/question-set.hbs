@@ -1,0 +1,33 @@
+{{yield}}
+
+<div class="modal-title" style={{modalTitleStyle}}>
+	<span>{{question.title}}</span>
+</div>
+
+<div class="modal-body">
+	{{#each question.answers as |answer|}}
+		<div class={{answer.class}} {{action "selectAnswer" answer}}>
+			<span>{{answer.title}}</span>
+		</div>
+	{{else}}
+		<div class="label">Enter the last four of your SSN...</div>
+		{{ input class="ssn" key-up="updateSSN" placeholder="1234" }}
+	{{/each}}
+</div>
+
+<div class="modal-footer">
+	<div class="modal-footer-buttons">
+		<div class="modal-footer-button two ease" {{action "goBack" }}>
+			<span>Back</span>
+		</div>
+		{{#if ssn}}
+			<div class="modal-footer-button two last ease" {{action "answer" question.i ssn }} >
+				<span>Next</span>
+			</div>
+		{{else}}
+			<div class="modal-footer-button two last ease" {{action "answer" question.i answer }} >
+				<span>Next</span>
+			</div>
+		{{/if}}
+	</div>
+</div>
